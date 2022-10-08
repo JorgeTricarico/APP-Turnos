@@ -1,4 +1,3 @@
-
 package com.miturno.Service;
 
 import com.miturno.exceptions.InvalidUserException;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Leonardo Terlizzi
  */
+
 @Service
 public interface UserService {
     
@@ -23,6 +23,5 @@ public interface UserService {
     public void deleteUser(Long id) throws NotFoundException;
     
     public void updateUser(User user) throws InvalidUserException;
-    
     
 }

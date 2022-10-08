@@ -1,4 +1,3 @@
-
 package com.miturno.controller;
 
 import com.miturno.Service.UserService;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Leonardo Terlizzi
  */
+
 @RestController
 public class UserController {
     
@@ -55,4 +55,5 @@ public class UserController {
         user.setId(id);
         userServ.updateUser(user);
     }
+    
 }
