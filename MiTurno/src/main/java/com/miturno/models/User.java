@@ -37,11 +37,11 @@ public class User implements Serializable {
 //  @Column(length = 30, nullable = false)
     private String name;
 
-//  @NotBlank(message = "Lastname cannot be null")
+    @NotBlank(message = "Lastname cannot be null")
 //  @Column(length = 40, nullable = false)
     private String lastName;
 
-//  @NotBlank(message = "DocumentType cannot be null")
+  @NotBlank(message = "DocumentType cannot be null")
     @Enumerated(value = EnumType.STRING)
     private DocumentTipe DocumentTipe;
 
@@ -53,7 +53,7 @@ public class User implements Serializable {
 //  @Column(nullable = false)
     private String email;
 
-//  @NotBlank(message = "Password cannot be null")
+  @NotBlank(message = "Password cannot be null")
 //  @Column(nullable = false)
     private String password;
 
