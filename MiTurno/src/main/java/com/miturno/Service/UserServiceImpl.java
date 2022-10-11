@@ -2,7 +2,9 @@ package com.miturno.Service;
 
 import com.miturno.exceptions.InvalidUserException;
 import com.miturno.exceptions.NotFoundException;
+import com.miturno.models.Role;
 import com.miturno.models.User;
+import com.miturno.models.enums.RoleEnum;
 import com.miturno.repositories.UserRepository;
 
 import java.beans.ExceptionListener;
@@ -72,6 +74,11 @@ public class UserServiceImpl implements UserService{
 
         newUser = user;
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+//        Role rol = new Role();
+//        rol.setRoleName(RoleEnum.WORKER);
+//        rol.setDescription("Worker");
+//        newUser.setRoles(rol);
         saveUser(newUser);
     }
 
