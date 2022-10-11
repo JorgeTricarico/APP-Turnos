@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -32,16 +35,19 @@ public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(length= 20, nullable=false)
+
+    @NotBlank(message = "Name of patient cannot be null")
+    //@Column(length= 20, nullable=false)
     private String name;
 
+    @NotBlank(message = "Last name of patient cannot be null")
     @Column(length= 30, nullable=false)
     private String last_name;
     
     @Enumerated(value = EnumType.STRING)
     private DocumentTipe documentTipe;
-    
+
+    @NotNull(message = "Document of patient cannot be null")
     @Column(unique = true, nullable = false)
     private Long document;
     

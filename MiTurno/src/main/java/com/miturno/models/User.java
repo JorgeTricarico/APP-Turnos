@@ -1,23 +1,19 @@
 package com.miturno.models;
 
 import java.sql.Timestamp;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import com.miturno.models.enums.DocumentTipe;
 import java.io.Serializable;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 //import javax.validation.constraints.NotNull;
 
@@ -33,32 +29,33 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Name cannot be null")
+    @NotBlank(message = "Name of user cannot be null")
 //  @Column(length = 30, nullable = false)
     private String name;
 
-    @NotBlank(message = "Lastname cannot be null")
+    @NotBlank(message = "Lastname of user cannot be null")
 //  @Column(length = 40, nullable = false)
     private String lastName;
 
-  @NotBlank(message = "DocumentType cannot be null")
+    @NotNull(message = "DocumentType of user cannot be null")
     @Enumerated(value = EnumType.STRING)
     private DocumentTipe DocumentTipe;
 
-//  @NotNull(message = "Document cannot be null")
+    @NotNull(message = "Document of user cannot be null")
 //  @Column(unique = true, nullable = false)
     private Long document;
 
-//  @Email(message = "Email should be valid")
+    @Email(message = "Email of user should be valid")
 //  @Column(nullable = false)
     private String email;
 
-  @NotBlank(message = "Password cannot be null")
+  @NotBlank(message = "Password of user cannot be null")
 //  @Column(nullable = false)
     private String password;
 
-//  @OneToOne(fetch = FetchType.EAGER)
-//  private Roles roles;
+
+  @OneToOne(fetch = FetchType.EAGER)
+  private Role roles;
     
     @CreationTimestamp
     @Column(updatable = false)

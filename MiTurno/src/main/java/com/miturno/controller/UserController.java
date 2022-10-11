@@ -41,7 +41,7 @@ public class UserController {
     
     @PostMapping("/auth/register")
     public void registerUser(@Valid @RequestBody User user) throws InvalidUserException{
-        userServ.saveUser(user);
+        userServ.registerUser(user);
         //falta implementación para añadir rol a usuario
     }
     
@@ -55,5 +55,10 @@ public class UserController {
         user.setId(id);
         userServ.updateUser(user);
     }
-    
+
+    @GetMapping("/auth/login")
+    @ResponseBody
+    public User login(@RequestBody User user) throws InvalidUserException, NotFoundException {
+        return userServ.validationUser(user);
+    }
 }
