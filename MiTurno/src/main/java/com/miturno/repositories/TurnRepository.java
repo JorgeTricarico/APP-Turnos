@@ -1,7 +1,7 @@
 
 package com.miturno.repositories;
 
-import com.miturno.models.Patient;
+import com.miturno.models.Turn;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, Long> {
+public interface TurnRepository extends JpaRepository<Turn, Long> {
     
-    Patient findByDocument(Long document);
+  //  Turn findByDocument(String document);
+    
 }

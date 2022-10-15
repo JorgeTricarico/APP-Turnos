@@ -6,6 +6,9 @@ import com.miturno.exceptions.NotFoundException;
 import com.miturno.models.User;
 import java.util.List;
 import javax.validation.Valid;
+
+import com.miturno.models.dto.LoginRequest;
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +38,7 @@ public class UserController {
     
     @GetMapping("/user")
     @ResponseBody
-    public User getUser(Long id) throws NotFoundException{
+    public User getUser(@RequestParam Long id) throws NotFoundException{
         return userServ.getUser(id);
     }
     
@@ -49,16 +52,15 @@ public class UserController {
     public void deleteUser(@RequestParam Long id) throws NotFoundException {
         userServ.deleteUser(id);
     }
-    
+
     @PatchMapping("/user/update")
-    public void updateUser(@RequestBody User user, @RequestParam Long id) throws InvalidUserException{
-        user.setId(id);
-        userServ.updateUser(user);
+    public void updateUser(@Valid @RequestBody User user, @RequestParam Long id) throws InvalidUserException {
+                userServ.updateUser(user, id);
     }
 
-    @GetMapping("/auth/login")
+    @PostMapping("/auth/login")
     @ResponseBody
-    public User login(@RequestBody User user) throws InvalidUserException, NotFoundException {
+    public User login(@RequestBody LoginRequest user) throws InvalidUserException, NotFoundException {
         return userServ.validationUser(user);
     }
 }

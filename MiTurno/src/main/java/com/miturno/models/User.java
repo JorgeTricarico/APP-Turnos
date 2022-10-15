@@ -1,76 +1,59 @@
 package com.miturno.models;
 
-import java.sql.Timestamp;
-import javax.persistence.*;
-
-import lombok.*;
+import com.miturno.models.enums.DocumentType;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
-import com.miturno.models.enums.DocumentTipe;
+
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import javax.validation.constraints.*;
-//import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 @Entity
 @Data
 @Table(name = "users")
-@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id=?")
-@Where(clause = "deleted=false")
+//@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id=?")
+//@Where(clause = "deleted=false")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements Serializable {
+
+    private String rol;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Name of user cannot be null")
+    @NotBlank(message = "Name cannot be null")
 //  @Column(length = 30, nullable = false)
     private String name;
 
-    @NotBlank(message = "Lastname of user cannot be null")
+    @NotBlank(message = "Lastname cannot be null")
 //  @Column(length = 40, nullable = false)
     private String lastName;
 
-    @NotNull(message = "DocumentType of user cannot be null")
-    @Enumerated(value = EnumType.STRING)
-    private DocumentTipe DocumentTipe;
 
-    @NotNull(message = "Document of user cannot be null")
-    @Min(
-            value = 1000000,
-            message = "Document must have at least 7 characters"
-    )
-    @Max(
-            value = 1000000000,
-            message = "Document must have a maximum of 10 characters"
-    )
-//    @Size(
-//            min = 7,
-//            max = 11,
-//            message = "The document must be between {min} and {max} characters long"
-//    )
+    @NotNull(message = "DocumentType cannot be null")
+    @Enumerated(value = EnumType.STRING)
+    private DocumentType documentType;
+
+    @NotNull(message = "Document cannot be null")
 //  @Column(unique = true, nullable = false)
     private Long document;
 
-    @Email(message = "Email of user should be valid")
-
+    @Email(message = "Email should be valid")
 //  @Column(nullable = false)
     private String email;
 
-  @NotBlank(message = "Password of user cannot be null")
-  @Size(
-          min = 5,
-          max = 62,
-          message = "The password must be between {min} and {max} characters long"
-  )
+  @NotBlank(message = "Password cannot be null")
 //  @Column(nullable = false)
     private String password;
 
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  private Role role;
+
     
     @CreationTimestamp
     @Column(updatable = false)
