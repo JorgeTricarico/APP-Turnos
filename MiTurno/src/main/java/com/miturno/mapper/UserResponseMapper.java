@@ -1,12 +1,13 @@
 package com.miturno.mapper;
 
 import com.miturno.models.User;
+import com.miturno.models.dto.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
-public interface UserResponse {
+public interface UserResponseMapper {
 
     @Mappings({
             @Mapping(target = "password", ignore = true),

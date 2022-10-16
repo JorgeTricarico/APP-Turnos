@@ -7,12 +7,12 @@ import com.miturno.exceptions.InvalidDoctorException;
 import com.miturno.exceptions.InvalidUserException;
 import com.miturno.exceptions.NotFoundException;
 import com.miturno.models.Doctor;
-import com.miturno.models.User;
+import com.miturno.models.dto.DoctorResponse;
 import com.sun.corba.se.impl.protocol.RequestCanceledException;
 
 public interface DoctorService {
 
-    public List<Doctor> getDoctors() throws NotFoundException;
+    public List<DoctorResponse> getDoctors() throws NotFoundException;
 
     public Doctor getDoctor(Long id) throws NotFoundException;
 
@@ -22,7 +22,7 @@ public interface DoctorService {
 
     public void updateDoctor(Doctor doctor) throws InvalidDoctorException;
 
-    public void registerDoctor(Doctor Doctor, ArrayList<Integer> days) throws InvalidDoctorException, InvalidUserException;
+    public void registerDoctor(Doctor doctor) throws InvalidDoctorException, InvalidUserException;
 
     public Doctor validationDoctor(Doctor doctor) throws InvalidUserException, NotFoundException, RequestCanceledException;
 

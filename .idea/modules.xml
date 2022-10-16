@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MiTurno/MiTurno.iml" filepath="$PROJECT_DIR$/MiTurno/MiTurno.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Temporal.iml" filepath="$PROJECT_DIR$/.idea/Temporal.iml" />
+    </modules>
+  </component>
+</project>
