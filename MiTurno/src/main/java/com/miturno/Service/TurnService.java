@@ -5,7 +5,10 @@ import com.miturno.exceptions.InvalidDoctorException;
 import com.miturno.exceptions.InvalidTurnException;
 import com.miturno.exceptions.NotFoundException;
 import com.miturno.models.Doctor;
+import com.miturno.models.Patient;
 import com.miturno.models.Turn;
+import com.miturno.models.dto.TurnResponse;
+
 import java.util.List;
 
 /**
@@ -14,9 +17,9 @@ import java.util.List;
  */
 public interface TurnService {
     
-    public List<Turn> getTurns() throws NotFoundException;
+    public List<TurnResponse> getTurns() throws NotFoundException;
     
-    public Turn getTurn(Long id) throws NotFoundException;
+    public TurnResponse getTurn(Long id) throws NotFoundException;
     
     public void saveTurn(Turn turn) throws InvalidTurnException;
     
@@ -25,6 +28,8 @@ public interface TurnService {
     public void updateTurn(Turn turn) throws InvalidTurnException;
     
     public void lockTurn(Turn turn) throws InvalidTurnException;
+    
+    public void addPatientToTurn(Patient patient, Turn turn) throws NotFoundException;
     
     public void flushTurns(Doctor doctor, int month, int year) throws InvalidDoctorException;
 }

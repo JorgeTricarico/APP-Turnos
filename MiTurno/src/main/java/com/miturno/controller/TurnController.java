@@ -2,13 +2,18 @@
 package com.miturno.controller;
 
 import com.miturno.Service.DoctorService;
+import com.miturno.Service.PatientService;
 import com.miturno.Service.TurnService;
 import com.miturno.exceptions.InvalidDoctorException;
 import com.miturno.exceptions.InvalidTurnException;
 import com.miturno.exceptions.NotFoundException;
 import com.miturno.models.Doctor;
+import com.miturno.models.Patient;
 import com.miturno.models.Turn;
 import java.util.List;
+
+import com.miturno.models.dto.TurnResponse;
+import com.miturno.repositories.TurnRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,15 +37,21 @@ public class TurnController {
     @Autowired
     private DoctorService docServ;
     
+    @Autowired
+    private PatientService patServ;
+
+    @Autowired
+    private TurnRepository turnRepo;
+    
     @GetMapping("/turns")
     @ResponseBody
-    public List<Turn> getTurns() throws NotFoundException {
+    public List<TurnResponse> getTurns() throws NotFoundException {
         return turnServ.getTurns();
     }
     
     @GetMapping("/turn/find")
     @ResponseBody
-    public Turn getTurn(@RequestParam Long id) throws NotFoundException {
+    public TurnResponse getTurn(@RequestParam Long id) throws NotFoundException {
         return turnServ.getTurn(id);
     }
     
@@ -68,8 +79,14 @@ public class TurnController {
     
     @PatchMapping("/turn/lock")
     public void lockTurn(@RequestParam Long id) throws NotFoundException, InvalidTurnException {
-        Turn turn = turnServ.getTurn(id);
+        Turn turn = turnRepo.getReferenceById(id);
         turnServ.lockTurn(turn);
     }
     
+    @PostMapping("/turn/addpatient")
+    public void addPatientToTurn(@RequestParam Long turn_id, @RequestParam Long patient_id) throws NotFoundException {
+        Patient patient = patServ.getPatient(patient_id);
+        Turn turn = turnRepo.getReferenceById(turn_id);
+        turnServ.addPatientToTurn(patient, turn);       
+    }
 }

@@ -42,7 +42,7 @@ public class DoctorController {
 
     @PostMapping("/doctor/register")
     public void registerDoctor(@RequestBody Doctor doctor, @RequestParam ArrayList<Integer> days) throws InvalidDoctorException, InvalidUserException {
-        docServ.registerDoctor(doctor);
+        docServ.registerDoctor(doctor, days);
     }
     
     @DeleteMapping("/doctor/delete")

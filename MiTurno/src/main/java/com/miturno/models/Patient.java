@@ -20,7 +20,9 @@ import javax.persistence.Table;
 import com.miturno.models.enums.DocumentType;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 /**
  *
@@ -30,8 +32,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Data
 @Table(name = "patients")
-//@SQLDelete(sql = "UPDATE patients SET deleted = true WHERE id=?")
-//@Where(clause= "deleted=false")
+@SQLDelete(sql = "UPDATE patients SET deleted = true WHERE id=?")
+@Where(clause= "deleted=false")
 public class Patient implements Serializable {
     
     @Id
@@ -70,7 +72,7 @@ public class Patient implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "turn_id", referencedColumnName = "id")
     @ElementCollection
-    private List<Turn> turnos = new ArrayList<>();
+    private List<Turn> turns = new ArrayList<>();
     
     @CreationTimestamp
     @Column(updatable = false)

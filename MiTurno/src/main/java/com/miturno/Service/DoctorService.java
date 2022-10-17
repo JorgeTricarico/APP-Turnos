@@ -22,7 +22,7 @@ public interface DoctorService {
 
     public void updateDoctor(Doctor doctor) throws InvalidDoctorException;
 
-    public void registerDoctor(Doctor doctor) throws InvalidDoctorException, InvalidUserException;
+    public void registerDoctor(Doctor Doctor, ArrayList<Integer> days) throws InvalidDoctorException, InvalidUserException;
 
     public Doctor validationDoctor(Doctor doctor) throws InvalidUserException, NotFoundException, RequestCanceledException;
 

@@ -1,25 +1,27 @@
 package com.miturno.Service;
 
-import com.miturno.exceptions.InvalidDoctorException;
-import com.miturno.exceptions.InvalidUserException;
-import com.miturno.exceptions.NotFoundException;
-import com.miturno.mapper.DoctorResponseMapper;
-import com.miturno.models.Doctor;
-import com.miturno.models.dto.DoctorResponse;
-import com.miturno.repositories.DoctorRepository;
-import com.miturno.util.Encrypter;
-import com.miturno.util.Validation;
-import com.sun.corba.se.impl.protocol.RequestCanceledException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.miturno.exceptions.InvalidUserException;
+import com.miturno.mapper.DoctorResponseMapper;
+import com.miturno.models.dto.DoctorResponse;
+import com.miturno.util.Encrypter;
+import com.miturno.util.Validation;
+import com.sun.corba.se.impl.protocol.RequestCanceledException;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.miturno.exceptions.InvalidDoctorException;
+import com.miturno.exceptions.NotFoundException;
+import com.miturno.models.Doctor;
+import com.miturno.repositories.DoctorRepository;
+import com.miturno.util.intToDayFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class DoctorServiceImpl implements DoctorService{
@@ -32,6 +34,9 @@ public class DoctorServiceImpl implements DoctorService{
 
     @Autowired
     private Validation validation;
+    
+    @Autowired
+    private intToDayFactory intToDayFactory;
 
     @Autowired
     private DoctorResponseMapper mapper;
@@ -52,7 +57,6 @@ public class DoctorServiceImpl implements DoctorService{
             return listDoctorResponse;
         }
     }
-
 
     @Override
     public Doctor getDoctor(Long id) throws NotFoundException {
@@ -76,17 +80,18 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
-    public void registerDoctor(Doctor doctor) throws InvalidDoctorException, InvalidUserException {
+    public void registerDoctor(Doctor doctor, ArrayList<Integer> days) throws InvalidDoctorException, InvalidUserException {
 
         validation.validationEmail(doctor.getEmail());
         validation.validationDocument(doctor.getDocument());
 
         // Esto pasalo donde quieras
-        /*ArrayList<DayOfWeek> dias = new ArrayList<>();
+        ArrayList<DayOfWeek> dias = new ArrayList<>();
         for(int i= 0; i < days.size(); i++) {
             dias.add(DayOfWeek.of(days.get(i)));
         }
-        doctor.setAttentionDays(dias);*/
+  //      ArrayList<DayOfWeek> dias = intToDayFactory.intToDayFactory(days);
+        doctor.setAttentionDays(dias);
         doctor.setPassword(encrypter.EncrypterPassword(doctor.getPassword()));
         saveDoctor(doctor);
     }
